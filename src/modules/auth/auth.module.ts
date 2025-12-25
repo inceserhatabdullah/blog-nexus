@@ -11,7 +11,7 @@ import { UserModule } from './../user/user.module';
     PassportModule,
     UserModule,
     JwtModule.registerAsync({
-      global: true,
+      global: false,
       useFactory: () => ({
         secret: AppConfig.jwtSecret,
         signOptions: { expiresIn: AppConfig.jwtExpiresIn },
