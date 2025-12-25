@@ -22,9 +22,10 @@
     "strictBindCallApply": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@core/prisma/client": ["src/core/database/generated/client"],
-      "@core/prisma/service": ["src/core/database/prisma.service"],
-      "@core/app/config": ["src/core/config/app.config"],
+      "@core/prisma/*": ["src/core/database/*"],
+      "@core/user/*": ["src/modules/user/*"],
+      "@core/config/*": ["src/core/config/*"],
+      "@core/helper/*": ["src/core/helper/*"],
     }
   }
 }

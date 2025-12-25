@@ -1,10 +1,10 @@
 import { Injectable, InternalServerErrorException, OnModuleDestroy } from "@nestjs/common";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@core/prisma/client";
+import { PrismaClient } from "@core/prisma/generated/client";
 import { OnModuleInit } from "@nestjs/common";
 import { Logger } from "@nestjs/common";
 import pg from "pg";
-import { AppConfig } from "@core/app/config";
+import { AppConfig } from "@core/config/app.config";
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {

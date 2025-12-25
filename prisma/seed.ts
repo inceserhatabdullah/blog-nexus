@@ -1,4 +1,4 @@
-import { PrismaClient } from '@core/prisma/client';
+import { PrismaClient } from '@core/prisma/generated/client';
 import { Authorities } from '../src/core/enums/authorities.enum';
 import { PrismaPg } from '@prisma/adapter-pg';
 
