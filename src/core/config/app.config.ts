@@ -13,7 +13,11 @@ export class AppConfig {
     return Number(process.env.API_PORT) || 3000;
   }
 
-  static get jwtExpiresIn() {
+  static get jwtExpiresIn(): any {
     return process.env.JWT_EXPIRES_IN || '1d';
+  }
+
+  static get jwtSecret() {
+    return process.env.JWT_SECRET;
   }
 }
