@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { AppConfig } from '@core/app/config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
@@ -14,7 +15,8 @@ async function bootstrap() {
     }
   ));
 
-  await app.listen(process.env.API_PORT ?? 3000);
+  app.setGlobalPrefix(AppConfig.apiVersionOnePrefix);
+  await app.listen(AppConfig.apiPort);
 
   const logger = new Logger('Bootstrap');
   logger.log(`Application is running on: ${await app.getUrl()}`);
