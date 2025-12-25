@@ -22,7 +22,7 @@ async function bootstrap() {
   logger.log(`Application is running on: ${await app.getUrl()}`);
 }
 
-bootstrap().catch(error => {
-  console.error(`Failed to bootstrap application: ${String(error)}`);
+bootstrap().catch(e => {
+  console.error('Failed to bootstrap application:', e);
   process.exit(1);
 });
