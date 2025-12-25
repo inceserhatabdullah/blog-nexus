@@ -23,7 +23,8 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@core/prisma/client": ["src/core/database/generated/client"],
-      "@core/prisma/service": ["src/core/database/prisma.service"]
+      "@core/prisma/service": ["src/core/database/prisma.service"],
+      "@core/app/config": ["src/core/config/app.config"],
     }
   }
 }
