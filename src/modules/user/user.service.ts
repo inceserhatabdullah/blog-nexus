@@ -1,43 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@core/prisma/service';
-import { User, Prisma } from '@core/prisma/client';
-import { UserWhereUniqueInput } from '@core/prisma/models';
+import { PrismaService } from '@core/prisma/prisma.service';
+import { User, Prisma } from '@core/prisma/generated/client';
+import { UserWhereInput } from '@core/prisma/generated/models';
+import { UserWithRoles, UserWithRolesAndRoles } from './types/user.types';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) { }
 
-  async user(userWhereUniqueInput: UserWhereUniqueInput): Promise<User | null> {
-    return this.prisma.user.findUnique({
+  async findOne(where: UserWhereInput): Promise<User | null> {
+    return this.prisma.user.findFirst({
       where: {
         isActive: true,
-        ...userWhereUniqueInput
+        ...where
       }
     });
-  }
-
-  async users(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.UserWhereUniqueInput;
-    where?: Prisma.UserWhereInput;
-    orderBy?: Prisma.UserOrderByWithRelationInput;
-  }): Promise<User[]> {
-    return this.prisma.user.findMany(params);
   }
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
     return this.prisma.user.create({ data });
   }
 
-  async update(params: {
-    where: Prisma.UserWhereUniqueInput;
-    data: Prisma.UserUpdateInput;
-  }): Promise<User> {
-    return this.prisma.user.update(params);
+  async createWithRoles(data: Prisma.UserCreateInput): Promise<UserWithRoles> {
+    return this.prisma.user.create({ data, include: { userRoles: true } });
   }
 
-  async delete(userWhereUniqueInput: UserWhereUniqueInput): Promise<User> {
-    return this.prisma.user.update({ where: userWhereUniqueInput, data: { isActive: false } });
+  async createWithRolesAndRoles(data: Prisma.UserCreateInput): Promise<UserWithRolesAndRoles> {
+    return this.prisma.user.create({ data, include: { userRoles: { include: { role: true } } } });
   }
+
 }
