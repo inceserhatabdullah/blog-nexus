@@ -17,7 +17,7 @@ export class UserService {
     });
   }
 
-  async findWithRoles(where: UserWhereInput): Promise<UserWithRoles | null> {
+  async findOneWithRoles(where: UserWhereInput): Promise<UserWithRoles | null> {
     return this.prisma.user.findFirst({
       where: {
         isActive: true,
@@ -29,7 +29,7 @@ export class UserService {
     });
   }
 
-  async findWithRolesAndRoles(where: UserWhereInput): Promise<UserWithRolesAndRoles | null> {
+  async findOneWithRolesAndRoles(where: UserWhereInput): Promise<UserWithRolesAndRoles | null> {
     return this.prisma.user.findFirst({
       where: {
         isActive: true,

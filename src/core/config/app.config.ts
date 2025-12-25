@@ -18,6 +18,6 @@ export class AppConfig {
   }
 
   static get jwtSecret() {
-    return process.env.JWT_SECRET;
+    return process.env.JWT_SECRET!;
   }
 }
