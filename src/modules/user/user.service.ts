@@ -17,6 +17,44 @@ export class UserService {
     });
   }
 
+  async findWithRoles(where: UserWhereInput): Promise<UserWithRoles | null> {
+    return this.prisma.user.findFirst({
+      where: {
+        isActive: true,
+        ...where
+      },
+      include: {
+        userRoles: true
+      }
+    });
+  }
+
+  async findWithRolesAndRoles(where: UserWhereInput): Promise<UserWithRolesAndRoles | null> {
+    return this.prisma.user.findFirst({
+      where: {
+        isActive: true,
+        ...where
+      },
+      include: {
+        userRoles: {
+          include: {
+            role: true
+          }
+        }
+      }
+    });
+  }
+
+  async softDelete(where: Prisma.UserWhereUniqueInput): Promise<User> {
+    return this.prisma.user.update({
+      where,
+      data: {
+        isActive: false
+      }
+    });
+  }
+
+
   async create(data: Prisma.UserCreateInput): Promise<User> {
     return this.prisma.user.create({ data });
   }
