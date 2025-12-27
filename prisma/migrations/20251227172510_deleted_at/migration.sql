@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "posts" ALTER COLUMN "deletedAt" DROP NOT NULL,
+ALTER COLUMN "deletedAt" DROP DEFAULT;
+
+-- AlterTable
+ALTER TABLE "roles" ALTER COLUMN "deletedAt" DROP NOT NULL,
+ALTER COLUMN "deletedAt" DROP DEFAULT;
+
+-- AlterTable
+ALTER TABLE "user_roles" ALTER COLUMN "deletedAt" DROP NOT NULL,
+ALTER COLUMN "deletedAt" DROP DEFAULT;
+
+-- AlterTable
+ALTER TABLE "users" ALTER COLUMN "deletedAt" DROP NOT NULL,
+ALTER COLUMN "deletedAt" DROP DEFAULT;
