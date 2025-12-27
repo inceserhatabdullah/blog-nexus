@@ -5,7 +5,7 @@ import { JwtAuthService } from "@core/auth/jwt/jwt.auth.service";
 import { SignupResponseDTO } from "./dto/signup.response.dto";
 import { SigninRequestDTO } from "./dto/signin.request.dto";
 import { SigninResponseDTO } from "./dto/signin.response.dto";
-  
+
 @Controller('auth')
 export class AuthController {
   constructor(
