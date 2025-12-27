@@ -1,1 +1,0 @@
-export type JWTSignType = { accessToken: string; expiresIn: string };
