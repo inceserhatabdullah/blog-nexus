@@ -21,7 +21,31 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
     const adapter = new PrismaPg(pool);
 
+    const prismaClient = new PrismaClient({ adapter });
+
+    const prismaExtendedClient = prismaClient.$extends(
+      {
+        query: {
+          $allModels: {
+            findMany({ args, query }) {
+              args.where ??= {};
+              args.where.deletedAt ??= null;
+
+              return query(args);
+            },
+            findFirst({ args, query }) {
+              args.where ??= {};
+              args.where.deletedAt ??= null;
+
+              return query(args);
+            }
+          }
+        }
+      }
+    )
     super({ adapter });
+
+    Object.assign(this, prismaExtendedClient);
 
     this.pool = pool;
   }
