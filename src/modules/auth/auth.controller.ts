@@ -1,17 +1,17 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { SignupRequestDTO } from "./dto/signup.request.dto";
-import { JwtAuthService } from "@core/auth/jwt/jwt.auth.service";
-import { SignupResponseDTO } from "./dto/signup.response.dto";
-import { SigninRequestDTO } from "./dto/signin.request.dto";
-import { SigninResponseDTO } from "./dto/signin.response.dto";
+import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { SignupRequestDTO } from './dto/signup.request.dto';
+import { JwtAuthService } from '@core/auth/jwt/jwt.auth.service';
+import { SignupResponseDTO } from './dto/signup.response.dto';
+import { SigninRequestDTO } from './dto/signin.request.dto';
+import { SigninResponseDTO } from './dto/signin.response.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly jwtAuthService: JwtAuthService
-  ) { }
+    private readonly jwtAuthService: JwtAuthService,
+  ) {}
 
   @Post('signup')
   @HttpCode(HttpStatus.CREATED)

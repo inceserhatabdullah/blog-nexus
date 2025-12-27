@@ -2,18 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@core/prisma/prisma.service';
 import { User, Prisma } from '@core/prisma/generated/client';
 import { UserWhereInput } from '@core/prisma/generated/models';
-import { UserWithRoles, UserWithRolesAndRoles } from '@core/user/types/user.type';
+import {
+  UserWithRoles,
+  UserWithRolesAndRoles,
+} from '@core/user/types/user.type';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async findOne(where: UserWhereInput): Promise<User | null> {
     return this.prisma.user.findFirst({
       where: {
         isActive: true,
-        ...where
-      }
+        ...where,
+      },
     });
   }
 
@@ -21,27 +24,29 @@ export class UserService {
     return this.prisma.user.findFirst({
       where: {
         isActive: true,
-        ...where
+        ...where,
       },
       include: {
-        userRoles: true
-      }
+        userRoles: true,
+      },
     });
   }
 
-  async findOneWithRolesAndRoles(where: UserWhereInput): Promise<UserWithRolesAndRoles | null> {
+  async findOneWithRolesAndRoles(
+    where: UserWhereInput,
+  ): Promise<UserWithRolesAndRoles | null> {
     return this.prisma.user.findFirst({
       where: {
         isActive: true,
-        ...where
+        ...where,
       },
       include: {
         userRoles: {
           include: {
-            role: true
-          }
-        }
-      }
+            role: true,
+          },
+        },
+      },
     });
   }
 
@@ -49,11 +54,10 @@ export class UserService {
     return this.prisma.user.update({
       where,
       data: {
-        isActive: false
-      }
+        isActive: false,
+      },
     });
   }
-
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
     return this.prisma.user.create({ data });
@@ -63,8 +67,12 @@ export class UserService {
     return this.prisma.user.create({ data, include: { userRoles: true } });
   }
 
-  async createWithRolesAndRoles(data: Prisma.UserCreateInput): Promise<UserWithRolesAndRoles> {
-    return this.prisma.user.create({ data, include: { userRoles: { include: { role: true } } } });
+  async createWithRolesAndRoles(
+    data: Prisma.UserCreateInput,
+  ): Promise<UserWithRolesAndRoles> {
+    return this.prisma.user.create({
+      data,
+      include: { userRoles: { include: { role: true } } },
+    });
   }
-
 }

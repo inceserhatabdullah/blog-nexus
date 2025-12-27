@@ -1,48 +1,50 @@
-import { Injectable, InternalServerErrorException, OnModuleDestroy } from "@nestjs/common";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@core/prisma/generated/client";
-import { OnModuleInit } from "@nestjs/common";
-import { Logger } from "@nestjs/common";
-import pg from "pg";
-import { AppConfig } from "@core/config/app.config";
+import {
+  Injectable,
+  InternalServerErrorException,
+  OnModuleDestroy,
+} from '@nestjs/common';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@core/prisma/generated/client';
+import { OnModuleInit } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
+import pg from 'pg';
+import { AppConfig } from '@core/config/app.config';
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
+export class PrismaService
+  extends PrismaClient
+  implements OnModuleInit, OnModuleDestroy
+{
   private logger = new Logger(PrismaService.name);
   private pool: pg.Pool;
 
   constructor() {
-
-    const pool = new pg.Pool(
-      {
-        connectionString: AppConfig.databaseUrl,
-      }
-    );
+    const pool = new pg.Pool({
+      connectionString: AppConfig.databaseUrl,
+    });
 
     const adapter = new PrismaPg(pool);
 
     const prismaClient = new PrismaClient({ adapter });
 
-    const prismaExtendedClient = prismaClient.$extends(
-      {
-        query: {
-          $allModels: {
-            findMany({ args, query }) {
-              args.where ??= {};
-              args.where.deletedAt ??= null;
+    const prismaExtendedClient = prismaClient.$extends({
+      query: {
+        $allModels: {
+          findMany({ args, query }) {
+            args.where ??= {};
+            args.where.deletedAt ??= null;
 
-              return query(args);
-            },
-            findFirst({ args, query }) {
-              args.where ??= {};
-              args.where.deletedAt ??= null;
+            return query(args);
+          },
+          findFirst({ args, query }) {
+            args.where ??= {};
+            args.where.deletedAt ??= null;
 
-              return query(args);
-            }
-          }
-        }
-      }
-    )
+            return query(args);
+          },
+        },
+      },
+    });
     super({ adapter });
 
     Object.assign(this, prismaExtendedClient);
@@ -73,5 +75,4 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
       this.logger.error('Error during database shutdown:', e);
     }
   }
-
 }

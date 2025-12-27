@@ -7,17 +7,21 @@ import { AuthModule } from './modules/auth/auth.module';
 import { RoleModule } from './modules/role/role.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(
-    {
+  imports: [
+    ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.production.local', '.env.development.local', '.env.local', '.env']
-    }
-  ),
+      envFilePath: [
+        '.env.production.local',
+        '.env.development.local',
+        '.env.local',
+        '.env',
+      ],
+    }),
     DatabaseModule,
     AuthModule,
-    RoleModule
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

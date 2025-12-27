@@ -1,4 +1,4 @@
 export interface JWTSignInterface {
-    accessToken: string;
-    expiresIn: string;
+  accessToken: string;
+  expiresIn: string;
 }
