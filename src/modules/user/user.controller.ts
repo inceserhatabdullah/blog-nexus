@@ -5,7 +5,7 @@ import type { JWTPayloadType } from "@core/auth/jwt/types/jwt.payload.type";
 import { UserService } from "./user.service";
 import { UserEntity } from "./entities/user.entity";
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(
     private readonly userService: UserService
