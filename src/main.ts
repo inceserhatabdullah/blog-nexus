@@ -1,7 +1,7 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, Logger, ValidationPipe } from '@nestjs/common';
 import { AppConfig } from '@core/config/app.config';
 
 async function bootstrap() {
@@ -15,6 +15,8 @@ async function bootstrap() {
     }
   ));
 
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  
   app.setGlobalPrefix(AppConfig.apiVersionOnePrefix);
   await app.listen(AppConfig.apiPort);
 
