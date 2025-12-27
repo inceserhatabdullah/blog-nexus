@@ -1,1 +1,0 @@
-export type AuthType = { sub: string; email: string; roles: string[] };
