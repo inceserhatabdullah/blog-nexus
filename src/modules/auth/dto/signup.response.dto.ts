@@ -1,6 +1,6 @@
-import { JWTSignType } from "../jwt/types/jwt.sign.type";
+import { JWTSignInterface } from "@core/auth/jwt/interfaces/jwt.sign.interface";
 
-export class SignupResponseDTO implements JWTSignType {
+export class SignupResponseDTO implements JWTSignInterface {
   accessToken: string;
   expiresIn: string;
 }

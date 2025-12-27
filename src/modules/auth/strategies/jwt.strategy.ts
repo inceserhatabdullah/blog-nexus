@@ -3,7 +3,7 @@ import { PassportStrategy } from "@nestjs/passport";
 import { Strategy, ExtractJwt } from "passport-jwt";
 import { AuthService } from "../auth.service";
 import { AppConfig } from "@core/config/app.config";
-import { JWTPayloadType } from "../jwt/types/jwt.payload.type";
+import { JWTPayloadInterface } from "@core/auth/jwt/interfaces/jwt.payload.interface";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
- validate(payload: JWTPayloadType) {
+ validate(payload: JWTPayloadInterface) {
     return this.authService.validateUser(payload.sub);
   }
 }
