@@ -2,7 +2,7 @@ import { AppConfig } from "@core/config/app.config";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { JWTSignType } from "./types/jwt.sign.type";
-import { UserWithRolesAndRoles } from "@core/user/types/user.types";
+import { UserWithRolesAndRoles } from "@core/user/types/user.type";
 import { JWTPayloadType } from "./types/jwt.payload.type";
 
 @Injectable()
