@@ -3,7 +3,7 @@ import { SignupRequestDTO } from "./dto/signup.request.dto";
 import { UserService } from "@core/user/user.service";
 import { Crypto } from "@core/helper/crypto";
 import { Authorities } from "src/core/enums/authorities.enum";
-import { JwtPayload } from "./jwt/jwt.payload";
+import { JwtAuthService } from "./jwt/jwt.auth.service";
 
 @Injectable()
 export class AuthService {
@@ -41,12 +41,37 @@ export class AuthService {
         },
       });
 
-      this.logger.log(`User created: ${newUser.id} / ${newUser.email} at ${newUser.createdAt}`);
+      this.logger.log(`User created: ${newUser.id} at ${new Date().toISOString()}`);
 
-      return JwtPayload.fromUser(newUser);
+      return JwtAuthService.calculateJWTPayload(newUser);
     } catch (e) {
       throw new InternalServerErrorException(e);
     }
+  }
+
+  async signin(dto: SignupRequestDTO) {
+    try {
+      const user = await this.userService.findOneWithRolesAndRoles({
+        email: dto.email,
+      });
+
+      if (!user) {
+        throw new UnauthorizedException();
+      }
+
+      const isPasswordMatched = await Crypto.comparePassword(dto.password, user.password);
+
+      if (!isPasswordMatched) {
+        throw new UnauthorizedException();
+      }
+
+      this.logger.log(`User signed in: ${user.id} at ${new Date().toISOString()}`);
+
+      return JwtAuthService.calculateJWTPayload(user);
+    } catch (e) {
+      throw new InternalServerErrorException(e);
+    }
+
   }
 
   async validateUser(id: string) {
@@ -56,6 +81,8 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    return JwtPayload.fromUser(user);
+    this.logger.log(`User validated: ${user.id} at ${new Date().toISOString()}`);
+
+    return JwtAuthService.calculateJWTPayload(user);
   }
 }

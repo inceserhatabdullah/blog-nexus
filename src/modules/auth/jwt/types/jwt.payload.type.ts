@@ -1,0 +1,1 @@
+export type JWTPayloadType = { sub: string; email: string; roles: string[] };
