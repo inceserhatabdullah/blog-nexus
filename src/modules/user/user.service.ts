@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@core/prisma/prisma.service';
 import { User, Prisma } from '@core/prisma/generated/client';
 import { UserWhereInput } from '@core/prisma/generated/models';
-import { UserWithRoles, UserWithRolesAndRoles } from './types/user.types';
+import { UserWithRoles, UserWithRolesAndRoles } from './types/user.type';
 
 @Injectable()
 export class UserService {
